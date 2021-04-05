@@ -1,78 +1,47 @@
-import React from 'react';
-import {SafeAreaView, View, Text, Dimensions, StatusBar} from 'react-native';
+import React from 'react'
+import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
+import { View } from 'react-native'
 
-import {LineChart} from 'react-native-chart-kit';
+class ChartScreen extends React.PureComponent {
 
-const labels = [
-  'Label 1',
-  'Label 2',
-  'Label 3',
-  'Label 4',
-  'Label 5',
-  'Label 6',
-];
+  render() {
+    const data = [50, 10, 30, 20, -10, -20, 0, 25, -5, 10]
+    const dataRTL = [...data].reverse()
+    const xLabel = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+    const xLabelRTL = [...xLabel].reverse()
 
-const data = [
-  Math.random() * 100,
-  Math.random() * 100,
-  Math.random() * 100,
-  Math.random() * 100,
-  Math.random() * 100,
-  Math.random() * 100,
-];
-
-const ChartScreen: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <View>
-          <View
-            style={{
-              alignItems: 'center',
-            }}>
-            <Text style={{fontSize: 25}}>Line Chart Sample</Text>
-          </View>
-          <View style={{alignItems: 'center'}}>
-            <LineChart
-              data={{
-                labels: labels,
-                datasets: [
-                  {
-                    data: data,
-                  },
-                ],
-              }}
-              width={Dimensions.get('window').width - 50} // from react-native
-              height={220}
-              chartConfig={{
-                backgroundColor: '#e26a00',
-                backgroundGradientFrom: '#D9D9D9',
-                backgroundGradientTo: '#FFF',
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-                propsForDots: {
-                  r: '6',
-                  strokeWidth: '2',
-                  stroke: '#ffa726',
-                },
-              }}
-              bezier
-              style={{
-                marginVertical: 5,
-                borderRadius: 15,
-              }}
-            />
-          </View>
+    return (
+      <View>
+        <View style={{ height: 300, flexDirection: 'row' }}>
+          <LineChart
+            style={{ flex: 1, marginLeft: 10 }}
+            data={dataRTL}
+            svg={{ stroke: 'rgb(134, 65, 244)' }}
+            contentInset={{ top: 20, bottom: 20 }}
+          >
+            <Grid />
+          </LineChart>
+          <YAxis
+            data={dataRTL}
+            contentInset={{ top: 20, bottom: 20 }}
+            svg={{ fill: 'black', fontSize: 12 }}
+            numberOfTicks={8}
+            formatLabel={(value) => `${value}ºC`}
+          />
         </View>
-      </SafeAreaView>
-    </>
-  );
-};
+        <View>
+          <XAxis
+            style={{ marginHorizontal: 10 }}
+            data={dataRTL}
+            formatLabel={(value, index) => xLabelRTL[index]}
+            contentInset={{ left: 0, right: 22 }}
+            svg={{ fontSize: 12, fill: 'black' }}
+          />
+        </View>
+      </View>
+    )
 
-export default ChartScreen;
+  }
+}
 
+export default ChartScreen
