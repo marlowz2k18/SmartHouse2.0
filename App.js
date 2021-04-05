@@ -10,6 +10,7 @@ Amplify.configure(config)
 import { API, graphqlOperation } from 'aws-amplify'
 import { createTodo } from './src/graphql/mutations'
 import { listTodos } from './src/graphql/queries'
+import {ChartScreen} from './Screen/ChartScreen'
 
 import { withAuthenticator } from 'aws-amplify-react-native'
 
